@@ -5,8 +5,8 @@ import java.util.HashMap;
 
 interface IEmpCompute {
 	public void addCompany(String companyName, int wagePerHour, int maxWorkingDays, int maxWorkingHours);
-
 	public void calculateTotalWage();
+	public int getTotalEmpWage(String companyName);
 }
 
 public class EmpCompute implements IEmpCompute {
@@ -22,7 +22,9 @@ public class EmpCompute implements IEmpCompute {
 	// instance Variable
 	int totalEmpWage = 0;
 	int noOfCompanies, index;
+	//references of companyempwage objects are stored in arraylist
 	ArrayList<EmpCompute> companies;
+	//companyname is mapped with total employee wage
 	HashMap<String,Integer> totalEmpWages;
 
 	// creating a parameterized constructor
@@ -35,6 +37,8 @@ public class EmpCompute implements IEmpCompute {
 
 	}
 
+	//defalut constructor
+
 	public EmpCompute() {
 		companies = new ArrayList<>();
 		totalEmpWages=new HashMap<>();
@@ -44,7 +48,7 @@ public class EmpCompute implements IEmpCompute {
 	void setTotalEmployeeWage(int totalEmpWage) {
 		this.totalEmpWage = totalEmpWage;
 	}
-
+	 //it creates Company EmployeeWage objects and add to the arraylist
 	@Override
 	public void addCompany(String companyName, int wagePerHour, int maxWorkingDays, int maxWorkingHours) {
 
@@ -102,6 +106,13 @@ public class EmpCompute implements IEmpCompute {
 	        }
 
 	    }
+
+	 @Override
+	public int getTotalEmpWage(String companyName)
+	    {
+	        return totalEmpWages.get(companyName);
+	    }
+
 
 	@Override
 	public String toString() {

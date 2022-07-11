@@ -11,6 +11,9 @@ public class EmployeeWageComputation {
         empCompute.addCompany("Amazon", 19, 10, 150);
         empCompute.calculateTotalWage();
         empCompute.printTotalEmpWages();
+        String query = "Google";
+        int totalWage = empCompute.getTotalEmpWage(query);
+        System.out.println("Total Employee Wage for " + query + " company is " + totalWage);
 
 
 	}
