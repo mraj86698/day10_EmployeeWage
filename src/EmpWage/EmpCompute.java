@@ -1,6 +1,12 @@
 package EmpWage;
+interface IEmpCompute
+{
+    public void addCompany(String companyName, int wagePerHour, int maxWorkingDays, int maxWorkingHours);
 
-public class EmpCompute {
+    public void calculateTotalWage();
+}
+
+public class EmpCompute implements IEmpCompute{
 
 	// class constants
 	static final int partTime = 1;
@@ -27,7 +33,8 @@ public class EmpCompute {
 	void setTotalEmployeeWage(int totalEmpWage) {
 		this.totalEmpWage=totalEmpWage;
 	}
-	void addCompany(String companyName, int wagePerHour, int maxWorkingDays, int maxWorkingHours) {
+	@Override
+	public void addCompany(String companyName, int wagePerHour, int maxWorkingDays, int maxWorkingHours) {
 		companies[index++]=new EmpCompute(companyName,wagePerHour,maxWorkingDays,maxWorkingHours);
 	}
 	public EmpCompute(int noOfCompanies)
@@ -53,7 +60,8 @@ public class EmpCompute {
 		}
 	}
 
-	void calculateTotalWage() {
+	@Override
+	public void calculateTotalWage() {
 		for(EmpCompute company :companies) {
 			int totalWage=calculateTotalWage(company);
 			company.setTotalEmployeeWage(totalWage);
