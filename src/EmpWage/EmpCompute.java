@@ -11,7 +11,9 @@ public class EmpCompute {
 	int maxWorkingDays;
 	int maxWorkingHours;
 	// instance Variable
-	int totalWage=0 ;
+	int totalEmpWage=0 ;
+	int noOfCompanies, index;
+    EmpCompute[] companies;
 
 	//creating a parameterized constructor
 
@@ -22,6 +24,18 @@ public class EmpCompute {
 		this.maxWorkingHours = maxWorkingHours;
 
 	}
+	void setTotalEmployeeWage(int totalEmpWage) {
+		this.totalEmpWage=totalEmpWage;
+	}
+	void addCompany(String companyName, int wagePerHour, int maxWorkingDays, int maxWorkingHours) {
+		companies[index++]=new EmpCompute(companyName,wagePerHour,maxWorkingDays,maxWorkingHours);
+	}
+	public EmpCompute(int noOfCompanies)
+    {
+        this.noOfCompanies = noOfCompanies;
+        companies = new EmpCompute[noOfCompanies];
+        index = 0;
+    }
 
 	int generateEmployeeType() {
 		return (int) (Math.random() * 100) % 3;
@@ -39,27 +53,37 @@ public class EmpCompute {
 		}
 	}
 
-	public void calculateTotalWage() {
-		System.out.println("Computation of total wage of "+companyName+"Employee");
-		System.out.println("-----------------------------------------------------");
-		System.out.printf("%5s		%5s		%5s		%5s\n","Day","WorkingHours","Wage","TotalWorkingHours");
-		int workingHours;
-		for(int day=1,totalWorkingHours=0;day <= maxWorkingDays && totalWorkingHours <= maxWorkingHours;day++,totalWorkingHours += workingHours) {
-			int EmpType=generateEmployeeType();
-			workingHours=getWorkingHours(EmpType);
-			int wage=workingHours*wagePerHour;
-			totalWage+=wage;
-			System.out.printf("%5d       %5d      %5d      %5d\n", day, workingHours, wage, totalWorkingHours + workingHours);
+	void calculateTotalWage() {
+		for(EmpCompute company :companies) {
+			int totalWage=calculateTotalWage(company);
+			company.setTotalEmployeeWage(totalWage);
+			System.out.println(company);
 		}
 	}
+
+	int calculateTotalWage(EmpCompute empCompute) {
+		System.out.println("Computation of total wage of "+empCompute.companyName+"Employee");
+		System.out.println("--------------------------------------------------------------------------------");
+		System.out.printf("%5s		%5s		%5s		%5s\n","Day","WorkingHours","Wage","TotalWorkingHours");
+		int workingHours,totalWage=0;
+		for(int day=1,totalWorkingHours=0;day <= empCompute.maxWorkingDays && totalWorkingHours <= empCompute.maxWorkingHours;day++,totalWorkingHours += workingHours) {
+			int EmpType=generateEmployeeType();
+			workingHours=getWorkingHours(EmpType);
+			int wage=workingHours* empCompute.wagePerHour;
+			totalWage+=wage;
+			System.out.printf("%10d       %10d      %10d      %10d\n", day, workingHours, wage, totalWorkingHours + workingHours);
+		}
+		return totalWage;
+	}
+
 	@Override
 	public String toString() {
 		System.out.println("Details of " + companyName + " employee");
-		System.out.println("-----------------------------------------------------");
+		System.out.println("--------------------------------------------------------------------------------");
 
 		System.out.println("Maximum working days:" + maxWorkingDays);
 		System.out.println("Maximum working hours:" + maxWorkingHours);
-		return "Total wage for a month of " + companyName + " employee is " + totalWage + "\n";
+		return "Total wage for a month of " + companyName + " employee is " + totalEmpWage + "\n";
 	}
 
 }
