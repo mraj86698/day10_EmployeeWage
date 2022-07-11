@@ -1,6 +1,7 @@
 package EmpWage;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 interface IEmpCompute {
 	public void addCompany(String companyName, int wagePerHour, int maxWorkingDays, int maxWorkingHours);
@@ -22,6 +23,7 @@ public class EmpCompute implements IEmpCompute {
 	int totalEmpWage = 0;
 	int noOfCompanies, index;
 	ArrayList<EmpCompute> companies;
+	HashMap<String,Integer> totalEmpWages;
 
 	// creating a parameterized constructor
 
@@ -35,6 +37,8 @@ public class EmpCompute implements IEmpCompute {
 
 	public EmpCompute() {
 		companies = new ArrayList<>();
+		totalEmpWages=new HashMap<>();
+
 	}
 
 	void setTotalEmployeeWage(int totalEmpWage) {
@@ -46,6 +50,7 @@ public class EmpCompute implements IEmpCompute {
 
 		EmpCompute company = new EmpCompute(companyName, wagePerHour, maxWorkingDays, maxWorkingHours);
 		companies.add(company);
+		totalEmpWages.put(companyName,0);
 	}
 
 	int generateEmployeeType() {
@@ -83,11 +88,20 @@ public class EmpCompute implements IEmpCompute {
 			workingHours = getWorkingHours(EmpType);
 			int wage = workingHours * empCompute.wagePerHour;
 			totalWage += wage;
-			System.out.printf("%10d       %10d      %10d      %10d\n", day, workingHours, wage,
-					totalWorkingHours + workingHours);
+			System.out.printf("%10d       %10d      %10d      %10d\n", day, workingHours, wage,totalWorkingHours + workingHours);
 		}
+		totalEmpWages.put(empCompute.companyName, totalWage);
 		return totalWage;
 	}
+	 void printTotalEmpWages()
+	    {
+	        System.out.println("The Companies and their total Employee Wages are:");
+	        for (String companyName : totalEmpWages.keySet())
+	        {
+	            System.out.println(companyName + ": " + totalEmpWages.get(companyName));
+	        }
+
+	    }
 
 	@Override
 	public String toString() {

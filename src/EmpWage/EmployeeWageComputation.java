@@ -10,6 +10,7 @@ public class EmployeeWageComputation {
         empCompute.addCompany("Apple", 9, 10, 70);
         empCompute.addCompany("Amazon", 19, 10, 150);
         empCompute.calculateTotalWage();
+        empCompute.printTotalEmpWages();
 
 
 	}
